@@ -6,7 +6,8 @@ class Login extends Component {
     super();
     this.state = {
         email : "",
-        password : ""
+        password : "",
+        token : "",
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -35,16 +36,19 @@ class Login extends Component {
   }
   async loginUser(e) {
     e.preventDefault();
-
     try {
-      await fetch("http://localhost:3001/", {
+      await fetch("http://localhost:3001/login", {
         method: "POST",
         body: JSON.stringify(this.state),
         headers:{
           'Content-Type': 'application/json'
         }
-      });
-
+      }).then(res => res.json())
+      .then(
+        (result) => {
+          localStorage.setItem("Token",result.token);
+        },
+      )
       this.props.history.push('/');
     } catch (e) {
       console.log(e);

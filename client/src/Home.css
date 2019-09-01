@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swap');
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+li, button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgb(180, 86, 49);;
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 10px;
+  background: white;
+  border: 1px solid lightgray;
+}
+
+.Logo {
+  margin-right: auto;
+  font-size: 50px;
+  color: coral;
+  cursor:pointer;
+}
+
+.nav__links {
+  list-style: none;
+}
+
+.nav__links li{
+  display: inline-block;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.nav__links li button{
+  transition: all 0.3s ease 0s;
+  cursor:pointer;
+}
+
+.nav__links li button:hover{
+  color: #0088a9;
+}
+
+button{
+  padding: 9px 29px;
+  background-color: rgb(128, 151, 156);
+  border: none;
+  border-radius: 50px;
+}
+
+.container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.map {
+  float: center;
+  width: 10%;
+}
+
+.house {
+  justify-content: flex-end;
+  vertical-align: top;
+  border: 1px solid black;
+  width: 100%;
+  height: 300px;
+  padding: 5px;
+}
+

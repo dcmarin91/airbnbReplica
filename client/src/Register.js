@@ -37,7 +37,7 @@ class Register extends Component {
     e.preventDefault();
 
     try {
-      await fetch("http://localhost:3001/", {
+      await fetch("http://localhost:3001/register", {
         method: "POST",
         body: JSON.stringify(this.state),
         headers:{
@@ -45,7 +45,7 @@ class Register extends Component {
         }
       });
 
-      this.props.history.push('/');
+      this.props.history.push('/login');
     } catch (e) {
       console.log(e);
     }
