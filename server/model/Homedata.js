@@ -12,7 +12,8 @@ const homedataSchema = mongoose.Schema({
   marker: Object,
   lat: String,
   lng: String,
-  cost: Number
+  cost: Number,
+  image: String,
 });
 
 

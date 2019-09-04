@@ -7,9 +7,32 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 const jwt = require("jsonwebtoken");
 const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3');
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/airbnb", { useNewUrlParser: true });
+
+var s3 = new aws.S3({
+  credentials : {
+    accessKeyId: "AKIAV32TH2CFLIT7PK7R",
+    secretAccessKey: "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"
+  },
+  region: "us-west-2"
+})
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'airbnbreplica91',
+    acl: "public-read",
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+})
 
 app.use(cookieSession({
   secret: "una_cadena_secreta",
@@ -106,8 +129,9 @@ app.post("/login", async (req, res, next) => {
 
 //Upload New Place
 app.post('/profile', upload.single('image'), async (req, res, next) => {
-    try {
-    const homedata = await Homedata.create({
+  console.log("Este es el archivo cargado " + req.file);
+  try {
+    await Homedata.create({
       placeType: req.body.place_value,
       guests: req.body.guests,
       adress: req.body.adress,
@@ -115,7 +139,7 @@ app.post('/profile', upload.single('image'), async (req, res, next) => {
       state: req.body.state,
       cost: req.body.cost,
       marker: req.body.markerPosition,
-      description: req.body.description
+      description: req.body.description,
     });
   } catch (err) {
     next(err);

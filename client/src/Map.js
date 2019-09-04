@@ -29,11 +29,12 @@ export class Map extends Component {
         lat: this.props.center.lat,
         lng: this.props.center.lng
       }
-    }
+    };
     this.handleplaceChange = this.handleplaceChange.bind(this);
     this.handleguestsChange = this.handleguestsChange.bind(this);
     this.handleMarkerChange = this.handleMarkerChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.fileInput = React.createRef();
   }
 
   handleplaceChange(event) {
@@ -68,18 +69,25 @@ export class Map extends Component {
     this.setState({ description: event.target.value })
   }
 
+
   async handleSubmit(event) {
     event.preventDefault();
+    const image = this.fileInput.current.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
     try {
       await fetch("http://localhost:3001/profile", {
-        method: "POST",
+        method: "post",
         body: JSON.stringify(this.state),
         headers:{
           'Content-Type': 'application/json'
         }
       });
-
-      this.props.history.push('/profile');
+      await fetch("http://localhost:3001/profile",{
+        method: "post",
+        body: formData,
+      })
+      this.props.history.push('/');
     } catch (e) {
       console.log(e);
     }
@@ -95,8 +103,6 @@ export class Map extends Component {
               city = this.getCity( addressArray ),
               area = this.getArea( addressArray ),
               state = this.getState( addressArray );
-
-        console.log( 'city', city, area, state );
 
         this.setState( {
           address: ( address ) ? address : '',
@@ -286,7 +292,6 @@ export class Map extends Component {
             </InfoWindow>
             {/*Marker*/}
             <Marker google={this.props.google}
-                    name={'Dolores park'}
                     draggable={true}
                     onDragEnd={ this.onMarkerDragEnd }
                     position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
@@ -311,71 +316,72 @@ export class Map extends Component {
     let map;
     if( this.props.center.lat !== undefined ) {
       map = <div>
-        <div>
-          <div className="form-group">
-            <label htmlFor="">City</label>
-            <input type="text" name="city" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.city }/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="">Area</label>
-            <input type="text" name="area" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.area }/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="">State</label>
-            <input type="text" name="state" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.state }/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="">Address</label>
-            <input type="text" name="address" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.address }/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="">Marker</label>
-            <input type="text" name="address" className="form-control" onChange={ this.handleMarkerLat } readOnly="readOnly" value={ this.state.markerPosition}/>
-          </div>
-          <form onSubmit={this.handleSubmit}>
-            <div className = "Form">
-              <select  onChange={this.handleplaceChange} name="Place_Type">
-                <option selected value = "entireplace">Entire Place</option>
-                <option value = "privateroom">Private Room</option>
-                <option value = "sharedroom">Shared Room</option>
-              </select>
-              <select name="Guests" onChange={this.handleguestsChange}>
-                <option value = "1">for 1 guest</option>
-                <option value = "2">for 2 guests</option>
-                <option value = "3">for 3 guests</option>
-                <option selected value = "4">for 4 guests</option>
-                <option value = "5">for 5 guests</option>
-                <option value = "6">for 6 guests</option>
-              </select>
-              <div>
-                <div className = "address">
-                  <input type="text" onChange={this.updateAddress.bind(this)} placeholder= "Adress"/>
-                </div>
-                <div>
-                  <input type="text" onChange={this.updateCost.bind(this)} placeholder= "Cost per night"/>
-                </div>
-                <div>
-                <textarea onChange={this.updateDescription.bind(this)} placeholder= "Add a description for your place"></textarea>
-                </div>
+        <div className = "container">
+          <div className = "row">
+            <div className = "col-md-6">
+              <div className="form-group">
+                <label htmlFor="">City</label>
+                <input type="text" name="city" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.area }/>
               </div>
-              <input type="submit" value="Submit" />
-            </div>
-          </form>
+              <div className="form-group">
+                <label htmlFor="">Area</label>
+                <input type="text" name="area" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.city }/>
+              </div>
+              <div className="form-group">
+                <label htmlFor="">State</label>
+                <input type="text" name="state" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.state }/>
+              </div>
+              <form onSubmit={this.handleSubmit}>
+                <div className = "Form">
+                  <label htmlFor="">Please enter the info</label>
+                  <div className = "selector">
+                    <select  onChange={this.handleplaceChange} name="Place_Type">
+                      <option selected value = "ENTIRE APARTMENT">Entire Place</option>
+                      <option value = "PRIVATE ROOM IN APARTMENT">Private Room</option>
+                      <option value = "SHARED ROOM IN APARTMENT">Shared Room</option>
+                    </select>
+                    <select name="Guests" onChange={this.handleguestsChange}>
+                      <option value = "1">for 1 guest</option>
+                      <option value = "2">for 2 guests</option>
+                      <option value = "3">for 3 guests</option>
+                      <option selected value = "4">for 4 guests</option>
+                      <option value = "5">for 5 guests</option>
+                      <option value = "6">for 6 guests</option>
+                    </select>
+                  </div>
+                  <div className = "information">
+                    <div className = "input-text">
+                      <input type="text" onChange={this.updateAddress.bind(this)} placeholder= "Adress"/>
+                    </div>
+                    <div className = "input-text">
+                      <input type="text" onChange={this.updateCost.bind(this)} placeholder= "Cost per night"/>
+                    </div>
+                    <div className = "input-text">
+                    <textarea onChange={this.updateDescription.bind(this)} placeholder= "Add a description for your place"></textarea>
+                    </div>
+                    <input type="file" name="image" ref = {this.fileInput}/>
+                  </div>
+                </div>
+                <input type="submit" value="Create Place" />
+              </form>
+          </div>
+          <div className = "col-md-6">
+            <AsyncMap
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv8mzlezsF6P5O-O82YLHL6hLoZfxijog&libraries=places"
+              loadingElement={
+                <div style={{ height: `100%` }} />
+              }
+              containerElement={
+                <div style={{ height: this.props.height }} />
+              }
+              mapElement={
+                <div style={{ height: `100%` }} />
+              }
+            />
+          </div>
         </div>
-
-        <AsyncMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv8mzlezsF6P5O-O82YLHL6hLoZfxijog&libraries=places"
-          loadingElement={
-            <div style={{ height: `100%` }} />
-          }
-          containerElement={
-            <div style={{ height: this.props.height }} />
-          }
-          mapElement={
-            <div style={{ height: `100%` }} />
-          }
-        />
       </div>
+    </div>
     } else {
       map = <div style={{height: this.props.height}} />
     }

@@ -10,17 +10,22 @@ class Profile extends Component{
   constructor(props){
     super(props);
     this.state = {
-      images: [],
+      image: {},
     };
     this.fileInput = React.createRef();
   }
 
   render(){
     return (
-      <div className = "Profile">
+      <div>
         <header>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
           <FontAwesomeIcon onClick={this.goHome.bind(this)} icon={faAirbnb} className="Logo"></FontAwesomeIcon>
-          <button onClick={this.handleLogout.bind(this)} type="submit">Logout</button>
+          <nav>
+            <ul className = "nav__links">
+              <li><button onClick={this.handleLogout.bind(this)} type="submit">Logout</button></li>
+            </ul>
+          </nav>
         </header>
         <div style={{ margin: '100px' }}>
           <Map
@@ -30,25 +35,8 @@ class Profile extends Component{
             zoom={15}
           />
         </div>
-        <form onSubmit = {this.uploadPhoto.bind(this)}>
-          <input type="file" name="image" ref = {this.fileInput}/>
-          <input type="submit" value="Enviar" />
-        </form>
       </div>
     )
-  }
-  async uploadPhoto(e) {
-    e.preventDefault();
-
-    const image = this.fileInput.current.files[0];
-    const formData = new FormData();
-    formData.append("image", image, image.name);
-
-    const response = await fetch("http://localhost:3001/profile",{
-      method: "post",
-      body: formData
-    })
-    this.props.history.push('/profile');
   }
   handleLogout(){
     this.props.history.push('/');

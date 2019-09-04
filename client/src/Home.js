@@ -29,26 +29,39 @@ class Home extends Component{
               </li> :
               <ul className="nav__links">
                 <li><button onClick={this.handleLogout.bind(this)} type="submit">Logout</button></li>
-                <li><button onClick={this.handleProfile.bind(this)} type="submit">Profile</button></li>
+                <li><button onClick={this.handleProfile.bind(this)} type="submit">Create</button></li>
               </ul>
               }
             </ul>
           </nav>
         </header>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
         <h4>Where to stay</h4>
-        <div className= "container">
-          {this.state.houses.map(house =>
-            <div className="house" key={house._id}>
-              <img src={'../../server/uploads/78a7c5919ca2e927a7938821815a56c1.jpg'} height="82" width="82"/>
-              <h5>{house.placeType} - {house.guests}</h5>
-              <h3>{house.description}</h3>
-              <p>{house.cost} /night</p>
+        <div className = "container">
+          <div className = "row">
+            <div className = "col-md-8">
+                {this.state.houses.map(house =>
+                  <div className="house" key={house._id}>
+                    <div className = "container">
+                      <div className = "row">
+                        <div className = "col-md-6">
+                          <img src={'https://airbnbreplica91.s3-us-west-2.amazonaws.com/1567532942705'} height="285" width="320"/>
+                        </div>
+                        <div className = "col-md-6">
+                          <h5>{house.placeType} for {house.guests}  guests</h5>
+                          <h3>{house.description}</h3>
+                          <p>{house.cost} USD/night</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
             </div>
-          )}
-        </div>
-        <div className="map">
-            <MapContainer />
+            <div className = "col-md-4">
+              <MapContainer />
+            </div>
           </div>
+        </div>
       </div>
     )
   }

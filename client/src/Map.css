@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swap');
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 Map {
   width: '50%';
   height: '50%';
@@ -19,4 +28,84 @@ Map {
   display: block;
   margin-bottom: 8px;
   font-size: 30px;
+}
+
+.Form{
+  max-width: 500px;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  margin: 10px auto;
+  padding: 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.selector {
+  background: #f4f7f8;
+  margin: 10px 0px;
+  background: #f4f7f8;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10px;
+}
+
+li, button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgb(180, 86, 49);;
+  text-decoration: none;
+}
+
+header {
+  display: flex !important;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 10px;
+  background: white;
+  border: 1px solid lightgray;
+}
+
+.Logo {
+  padding: -35px;
+  margin-right: auto;
+  font-size: 70px;
+  color: rgb(255, 106, 80);
+  cursor:pointer;
+}
+
+.nav__links {
+  list-style: none;
+}
+
+.nav__links li{
+  display: inline-block;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.nav__links li button{
+  transition: all 0.3s ease 0s;
+  cursor:pointer;
+}
+
+.nav__links li button:hover{
+  color: #0088a9;
+}
+
+button{
+  align-self: flex-end;
+  padding: 9px 29px;
+  background-color: rgb(128, 151, 156);
+  border: none;
+  border-radius: 50px;
+}
+
+.input-text {
+  padding: 10px 0px
 }

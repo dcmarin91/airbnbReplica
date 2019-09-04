@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-li, button {
+li{
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
@@ -15,7 +15,7 @@ li, button {
 }
 
 header {
-  display: flex;
+  display: flex !important;
   justify-content: flex-end;
   align-items: center;
   padding: 20px 10px;
@@ -24,10 +24,15 @@ header {
 }
 
 .Logo {
+  padding: -35px;
   margin-right: auto;
-  font-size: 50px;
-  color: coral;
+  font-size: 70px;
+  color: rgb(255, 106, 80);
   cursor:pointer;
+}
+
+img {
+  border-radius: 3px;
 }
 
 .nav__links {
@@ -50,29 +55,37 @@ header {
 }
 
 button{
-  padding: 9px 29px;
-  background-color: rgb(128, 151, 156);
+  padding: 25px 29px;
+  background-color:rgb(255, 106, 80);
   border: none;
-  border-radius: 50px;
-}
-
-.container{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
-}
-
-.map {
-  float: center;
-  width: 10%;
+  border-radius: 50px !important;
 }
 
 .house {
   justify-content: flex-end;
   vertical-align: top;
-  border: 1px solid black;
+  border: 1px solid gray;
   width: 100%;
-  height: 300px;
   padding: 5px;
+  margin: 30px 10px 30px 0px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
 }
 
+.house:hover{
+  box-shadow: 0 0 24px rgba(24, 24, 24, 0.2); 
+  color: #676c6d;
+}
+
+h5{
+  color: rgb(118, 118, 118);
+}
+
+h3{
+  padding: 20px 0px 100px;
+}
+
+p{
+  font-size: 20px;
+  padding-bottom: 0px;
+}

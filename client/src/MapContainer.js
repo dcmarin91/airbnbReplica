@@ -28,11 +28,11 @@ export class MapContainer extends Component {
     return (
       <div>
         <Map google={this.props.google}
-          zoom={15}
-          style={{width: '30%', height: '70%', position: 'absolute'}}
+          zoom={12.5}
+          style={{height: '800px', position: 'absolute'}}
           className={'Map'}
           initialCenter={{
-            lat: 40.731508,
+            lat: 40.7298716,
             lng: -73.995667
           }}>
           {this.state.places.map(place =>
