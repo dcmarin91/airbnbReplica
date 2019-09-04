@@ -77,7 +77,7 @@ export class Map extends Component {
 
 
   async handleSubmit(event) {
-    event.preventDefault();
+    //event.preventDefault();
     const image = this.fileInput.current.files[0];
     const formData = new FormData();
     const objArr = [];
@@ -258,7 +258,7 @@ export class Map extends Component {
    * When the user types an address in the search box
    * @param place
    */
-  /*
+  
   onPlaceSelected = ( place ) => {
     console.log( 'plc', place );
     const address = place.formatted_address,
@@ -284,7 +284,6 @@ export class Map extends Component {
       },
     })
   };
-*/
 
   render(){
     const AsyncMap = withScriptjs(
