@@ -45,7 +45,7 @@ class Home extends Component{
                     <div className = "container">
                       <div className = "row">
                         <div className = "col-md-6">
-                          <img src={'https://airbnbreplica91.s3-us-west-2.amazonaws.com/1567532942705'} height="285" width="320"/>
+                          <img src = {house.image} height="285" width="320"/>
                         </div>
                         <div className = "col-md-6">
                           <h5>{house.placeType} for {house.guests}  guests</h5>

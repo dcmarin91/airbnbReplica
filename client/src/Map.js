@@ -38,10 +38,12 @@ export class Map extends Component {
   }
 
   handleplaceChange(event) {
+    event.preventDefault();
   this.setState({place_value: event.target.value});
   }
 
   handleguestsChange(event) {
+    event.preventDefault();
     this.setState({guests: event.target.value})
   }
 
@@ -50,10 +52,12 @@ export class Map extends Component {
   }
 
   updateAddress(event) {
+    event.preventDefault();
     this.setState({adress: event.target.value})
   }
 
   updateCost(event) {
+    event.preventDefault();
     this.setState({cost: event.target.value})
   }
 
@@ -62,10 +66,12 @@ export class Map extends Component {
   }
 
   handleCityChange(event) {
+    event.preventDefault();
     this.setState({city: event.target.value})
   }
 
   updateDescription(event) {
+    event.preventDefault();
     this.setState({ description: event.target.value })
   }
 
@@ -74,18 +80,24 @@ export class Map extends Component {
     event.preventDefault();
     const image = this.fileInput.current.files[0];
     const formData = new FormData();
+    const objArr = [];
     formData.append("image", image, image.name);
+    formData.append("place_value", this.state.place_value);
+    formData.append("guests", this.state.guests);
+    formData.append("adress", this.state.adress);
+    formData.append("city", this.state.city);
+    formData.append("state", this.state.state);
+    formData.append("cost", this.state.cost);
+    formData.append("marker_lat", this.state.markerPosition.lat);
+    formData.append("marker_lng", this.state.markerPosition.lng);
+    formData.append("description", this.state.description);
     try {
-      await fetch("http://localhost:3001/profile", {
-        method: "post",
-        body: JSON.stringify(this.state),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      });
       await fetch("http://localhost:3001/profile",{
         method: "post",
         body: formData,
+        headers: {
+          "Contetnt-Type":"multipart/form-data" 
+        }
       })
       this.props.history.push('/');
     } catch (e) {
@@ -246,6 +258,7 @@ export class Map extends Component {
    * When the user types an address in the search box
    * @param place
    */
+  /*
   onPlaceSelected = ( place ) => {
     console.log( 'plc', place );
     const address = place.formatted_address,
@@ -271,7 +284,7 @@ export class Map extends Component {
       },
     })
   };
-
+*/
 
   render(){
     const AsyncMap = withScriptjs(

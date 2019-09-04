@@ -9,13 +9,14 @@ const jwt = require("jsonwebtoken");
 const multer  = require('multer');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
+require('dotenv').config()
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/airbnb", { useNewUrlParser: true });
 
 var s3 = new aws.S3({
   credentials : {
-    accessKeyId: "AKIAV32TH2CFLIT7PK7R",
-    secretAccessKey: "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"
+    accessKeyId: process.env.AWS_ACCESKEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY
   },
   region: "us-west-2"
 })
@@ -129,7 +130,6 @@ app.post("/login", async (req, res, next) => {
 
 //Upload New Place
 app.post('/profile', upload.single('image'), async (req, res, next) => {
-  console.log("Este es el archivo cargado " + req.file);
   try {
     await Homedata.create({
       placeType: req.body.place_value,
@@ -138,8 +138,10 @@ app.post('/profile', upload.single('image'), async (req, res, next) => {
       city: req.body.city,
       state: req.body.state,
       cost: req.body.cost,
-      marker: req.body.markerPosition,
+      marker_lat: req.body.marker_lat,
+      marker_lng: req.body.marker_lng,
       description: req.body.description,
+      image: req.file.location, 
     });
   } catch (err) {
     next(err);
